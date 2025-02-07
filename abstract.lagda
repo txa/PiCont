@@ -68,8 +68,8 @@ category of containers as a subcategory of the functor category
 , see
 \cite{containers}. We can generalize this to containers over a given
 category |ℂ|, with |S : Set| and |P : S → ℂ| with |(S ◁ P) X = Σ s : S
-.ℂ( P s,X)|. We can also move to categorified containers where |S| is
-a category and || is replaced by a coend.
+ℂ ( P s,X)|. We can also move to categorified containers where |S| is
+a category and |Σ| is replaced by a coend.
 
 Previously in joint work the first author has shown that the category
 of containers is cartesian closed \cite{altenkirch2010higher}. The first and 3rd author have
@@ -123,20 +123,20 @@ functors are representable, i.e. we have
   P_A : ∫ Γ
   P_B : ∫ (Γ ▷ A) 
 \end{code}
-We can now calculate |Π A B : ∫ Γ ⇒ Set|:
+Note that on objects |∫ F = Σ X : Set . F X| and we use the projections |.X| and |.f| to project out the compoents.  We can now calculate |Π A B : ∫ Γ ⇒ Set|:
 \begin{code}
 (Π A B) : ∫ Γ → Set
 (Π A B)(Y,f) 
 = ∫ ((Z,g): ∫ (P_Γ→)) ((h,_) : ∫(P_Γ→)((Y,f),(Z,g))) ((k,_) : A(Z,g)) → B(Z,g,k,_)
 = ∫ (Z : Set)(h : Y → Z) ((k,_) : A(Z,h ∘ f)) → B(Z,h ∘ f,k,_)
-= ∫ (Z : Set)(h : Y → Z) (k : P_A^Y → Z)(k ∘ P_A^f = h ∘ f))  → B(Z,h ∘ f,k,_)
+= ∫ (Z : Set)(h : Y → Z) (k : P_A.X → Z)(k ∘ P_A.f = h ∘ f))  → B(Z,h ∘ f,k,_)
 \end{code}
 Now we define a pushout as a HIT:
 \begin{code}
  data Q : Set where
     inl : Y → Q
-    inr : P_A^X → Q
-    glue : (x : X) → inl (f x) = inr (P_A^f x)    
+    inr : P_A.X → Q
+    glue : (x : X) → inl (f x) = inr (P_A.f x)    
 \end{code}
 and use the universal property and Yoneda:
 \begin{code}

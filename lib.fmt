@@ -103,8 +103,12 @@
 %format [_] = "|\_|"
 %format [_] = "|\!|\_|\!|"
 
-%format ∫ = |\int|
-%format P_A = "P_A" 
-%format P_B = "P_B" 
-%format P_Γ = "P_\Gamma"
+%format ∫ = "\int"
+%format P_A = "\mathrm{P}_\mathrm{A}" 
+%format P_B = "\mathrm{P}_\mathrm{B}" 
+%format P_Γ = "\mathrm{P}_\Gamma"
 %format  ⇒ = "\Rightarrow"
+%format ℂ = "\mathbb{C}"
+%format ▷ = "\lhd"
+%format Γ = "\Gamma" 
+
