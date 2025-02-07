@@ -1,0 +1,44 @@
+# Ignore all generated LaTeX files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.out
+*.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.fls
+*.log
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml
+
+# Ignore editor backup files
+*.bak
+*~
+*.swp
+*.swo
+*.tmp
+
+# Ignore generated PDFs
+*.pdf
+
+# Ignore abstract.tex since it's generated from abstract.lagda
+abstract.tex
+
+# Ignore build directories
+_build/
+out/
+tmp/
+
+# Ignore any compiled files if using Agda
+*.agdai
