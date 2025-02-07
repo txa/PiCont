@@ -81,7 +81,7 @@ the coherence issues of this model in last year's HoTT/UF \cite{damato:cont-coh}
 The obvious question is wether the container model is closed under
 |Π|-types. Our preliminary results suggest that this is not the case
 but that we may have to move to a model of categorified containers as
-introduced by Gylterud which have also been the subject of last year's
+introduced by Gylterud \cite{gylterud} which have also been the subject of last year's
 HoTT/UF talk by the first author.
 
 \section{Exponentials}
