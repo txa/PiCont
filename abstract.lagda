@@ -35,11 +35,23 @@
 }
 
 \institute{
-  \inst{1} School of Computer Science, University of Nottingham, UK\\
-  \email{psztxa@@nottingham.ac.uk}
+  School of Computer Science, University of Nottingham, UK\\
+  \email{\{psztxa,psxsd7\}@@nottingham.ac.uk}
   \and
-  \inst{2} Department of Logic, Eötvös Loránd University (ELTE), Hungary
+  Department of Computer Science, Eötvös Loránd University
+  (ELTE), Hungary \\
+  \email{akaposi@@inf.elte.hu}  
 }
+
+
+% \institute{
+%   \inst{1} School of Computer Science, University of Nottingham, UK\\
+%   \email{\{psztxa,psxsd7\}@@nottingham.ac.uk}
+%   \and
+%   \inst{2} Department of Computer Science, Eötvös Loránd University
+%   (ELTE), Hungary \\
+%   \email{akaposi@@inf.elte.hu}  
+% }
 
 
 %  \authorrunning{} has to be set for the shorter version of the authors' names;
@@ -84,6 +96,10 @@ but that we may have to move to a model of categorified containers as
 introduced by Gylterud \cite{gylterud} which have also been the subject of last year's
 HoTT/UF talk by the first author.
 
+We use freestyle Agda in this abstract, in particular |∫ Γ| is the
+category of elements of the presheaf |Γ| and (confusingly) |∫ (X : A)
+H(X,X)| is the end of the profunctor |H|.
+
 \section{Exponentials}
 \label{sec:exponentials}
 
@@ -97,14 +113,22 @@ Given |P_A , P_B : Set| which represent |A , B : Set ⇒ Set|  (e.g. |A
 X = P_A  → X|. We construct the container |A → B = S ◁ T| as follows:
 \begin{code}
  (A => B) X 
-= ∫ Y . (X → Y) → A Y → B Y
-= ∫ Y . (X → Y) → (P_A → Y) → B Y
-= ∫ Y . (X + P_A → Y) → B Y
-= B (X + P_A) 
-= P_B → (X + P_A)
-= P_B → Σ x : 2. ((x = 0) → X) × (x = 1) → P_A)
-= Σ f : P_B → 2 . (q : P_B)(f q = 0) → X × (q : P_B)(f q = 1) → P_A
-= Σ f : P_B → 2 . (q : P_B)(f q = 1) → P_A ◁ Σ (q : P_B)(f q = 0)
+ =⟨  universal property + Yoneda ⟩=
+ ∫ Y:Set . (X → Y) → A Y → B Y
+ =⟨  defn of A ⟩=
+ ∫ Y:Set . (X → Y) → (P_A → Y) → B Y
+ =⟨  universal property of + ⟩=
+ ∫ Y:Set . (X + P_A → Y) → B Y
+ =⟨  Yoneda ⟩=
+ B (X + P_A)
+ =⟨  defn of B ⟩=
+ P_B → (X + P_A)
+ =⟨  Encode + with Σ and Bool ⟩=
+ P_B → Σ x : 2. ((x = 0) → X) × (x = 1) → P_A)
+ =⟨  type-theoretic axiom of choice ⟩=
+ Σ f : P_B → 2 . (q : P_B)(f q = 0) → X × (q : P_B)(f q = 1) → P_A
+ =⟨  defn of container ⟩=
+ Σ f : P_B → 2 . (q : P_B)(f q = 1) → P_A ◁ Σ (q : P_B)(f q = 0)
 \end{code}
 
 \section{|Π|-types}
@@ -123,13 +147,14 @@ functors are representable, i.e. we have
   P_A : ∫ Γ
   P_B : ∫ (Γ ▷ A) 
 \end{code}
-Note that on objects |∫ F = Σ X : Set . F X| and we use the projections |.X| and |.f| to project out the compoents.  We can now calculate |Π A B : ∫ Γ ⇒ Set|:
+Note that on objects |∫ F = Σ X : Set . F X| and we use the projections |.X| and |.f| to project out the components.  We can now calculate |Π A B : ∫ Γ ⇒ Set|:
 \begin{code}
 (Π A B) : ∫ Γ → Set
-(Π A B)(Y,f) 
-= ∫ ((Z,g): ∫ (P_Γ→)) ((h,_) : ∫(P_Γ→)((Y,f),(Z,g))) ((k,_) : A(Z,g)) → B(Z,g,k,_)
-= ∫ (Z : Set)(h : Y → Z) ((k,_) : A(Z,h ∘ f)) → B(Z,h ∘ f,k,_)
-= ∫ (Z : Set)(h : Y → Z) (k : P_A.X → Z)(k ∘ P_A.f = h ∘ f))  → B(Z,h ∘ f,k,_)
+(Π A B)(Y,f)
+ =⟨  universal property + Yoneda ⟩=
+ ∫ ((Z,g): ∫ Γ) ((h,_) : ∫ Γ((Y,f),(Z,g))) ((k,_) : A(Z,g)) → B(Z,g,k,_)
+  =⟨  unfolding ⟩=
+ ∫ (Z : Set)(h : Y → Z) (k : P_A.X → Z)(k ∘ P_A.f = h ∘ f))  → B(Z,h ∘ f,k,_)
 \end{code}
 Now we define a pushout as a HIT:
 \begin{code}
@@ -140,9 +165,12 @@ Now we define a pushout as a HIT:
 \end{code}
 and use the universal property and Yoneda:
 \begin{code}
+ =⟨  universal property of pushout ⟩=
  = ∫ (Z : Set)(l : Q → Z) → B(Z,l ∘ inl ∘ f, l ∘ inr, _)
-= B(Q, inl ∘ f, inr, _)
-= Σ(m : P_B^Y → Q)(inr = m ∘ P_B^g)(inl ∘ f = m ∘ P_B^f)
+ =⟨  Yoneda ⟩=
+ B(Q, inl ∘ f, inr, _)
+ =⟨  defn of B ⟩=
+ Σ(m : P_B^Y → Q)(inr = m ∘ P_B^g)(inl ∘ f = m ∘ P_B^f)
 \end{code}
 The question is wether we can repeat the use of the type theoretic
 axiom of choice in this setting to derive a generalised container in
