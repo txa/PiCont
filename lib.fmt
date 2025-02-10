@@ -112,3 +112,4 @@
 %format ▷ = "\lhd"
 %format Γ = "\Gamma" 
 
+%format . = "."

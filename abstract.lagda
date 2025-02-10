@@ -79,8 +79,8 @@ containers |S ◁ P, T ◁ Q| can be represented as a pair
 category of containers as a subcategory of the functor category
 , see
 \cite{containers}. We can generalize this to containers over a given
-category |ℂ|, with |S : Set| and |P : S → ℂ| with |(S ◁ P) X = Σ s : S
-ℂ ( P s,X)|. We can also move to categorified containers where |S| is
+category |ℂ|, with |S : Set| and |P : S → ℂ| with |(S ◁ P) X = Σ s :
+S. ℂ ( P s,X)|. We can also move to categorified containers where |S| is
 a category and |Σ| is replaced by a coend.
 
 Previously in joint work the first author has shown that the category
